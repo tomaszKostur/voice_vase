@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Flowbite Button Group Test</title>
+
+  <!-- Tailwind Play CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Flowbite core -->
+  <link href="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.css" rel="stylesheet" />
+
+  <!-- IMPORTANT: Load a theme that defines neutral-*, border-default, rounded-base, etc. -->
+  <!-- Try 'minimal' first – it often matches the "soft/neutral" look best -->
+  <link href="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/themes/minimal.min.css" rel="stylesheet" />
+
+  <!-- If minimal doesn't look right, swap to modern: -->
+  <!-- <link href="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/themes/modern.min.css" rel="stylesheet" /> -->
+</head>
+<body class="bg-neutral-primary-soft p-10">  <!-- using semantic bg to confirm theme loaded -->
+
+  <div class="inline-flex rounded-base shadow-xs -space-x-px" role="group">
+    <button type="button" class="text-body bg-neutral-primary-soft border border-default hover:bg-neutral-secondary-medium hover:text-heading focus:ring-3 focus:ring-neutral-tertiary-soft font-medium leading-5 rounded-s-base text-sm px-3 py-2 focus:outline-none">
+      Profile
+    </button>
+    <button type="button" class="text-body bg-neutral-primary-soft border border-default hover:bg-neutral-secondary-medium hover:text-heading focus:ring-3 focus:ring-neutral-tertiary-soft font-medium leading-5 text-sm px-3 py-2 focus:outline-none">
+      Settings
+    </button>
+    <button type="button" class="text-body bg-neutral-primary-soft border border-default hover:bg-neutral-secondary-medium hover:text-heading focus:ring-3 focus:ring-neutral-tertiary-soft font-medium leading-5 rounded-e-base text-sm px-3 py-2 focus:outline-none">
+      Messages
+    </button>
+  </div>
+
+  <!-- Quick debug: if theme loaded, this text should be visible & styled -->
+  <p class="mt-6 text-heading text-lg">If you see this in dark/heading color → theme is working.</p>
+
+  <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
+</body>
+</html>
