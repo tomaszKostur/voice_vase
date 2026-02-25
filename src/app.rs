@@ -66,6 +66,7 @@ fn HomePage() -> impl IntoView {
             <p> huehuehue </p>
         </MainLayout>
         <O_Nas/>
+        <ActorSmallOverview/>
     }
 }
 
@@ -138,19 +139,6 @@ fn O_Nas() -> impl IntoView {
                 <li>Widoczność</li>
                 <li>Współpraca</li>
             </ul>
-
-
-
-    <button type="button" class="text-white bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">Default</button>
-    <button type="button" class="text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">Secondary</button>
-    <button type="button" class="text-body bg-neutral-primary-soft border border-default hover:bg-neutral-secondary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary-soft shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">Tertiary</button>
-    <button type="button" class="text-white bg-success box-border border border-transparent hover:bg-success-strong focus:ring-4 focus:ring-success-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">Success</button>
-    <button type="button" class="text-white bg-danger box-border border border-transparent hover:bg-danger-strong focus:ring-4 focus:ring-danger-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">Danger</button>
-    <button type="button" class="text-white bg-warning box-border border border-transparent hover:bg-warning-strong focus:ring-4 focus:ring-warning-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">Warning</button>
-    <button type="button" class="text-white bg-dark box-border border border-transparent hover:bg-dark-strong focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">Dark</button>
-    <button type="button" class="text-heading bg-transparent box-border border border-transparent hover:bg-neutral-secondary-medium focus:ring-4 focus:ring-neutral-tertiary font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">Ghost</button>
-
-
         }
 }
 
@@ -168,4 +156,41 @@ fn Microphone() -> impl IntoView {
       </g>
     </svg>
         }
+}
+
+
+#[component]
+fn ListOfActors() -> impl IntoView {
+    view! {
+        <div class="bg-neutral-primary-soft block max-w-sm p-6 border border-default rounded-base shadow-xs hover:bg-neutral-secondary-medium">
+            LIST OF ACTORS PLACEHOLDER
+        </div>
+    }
+}
+
+
+
+
+#[component]
+fn ActorSmallOverview() -> impl IntoView {
+    view! {
+        <div class="bg-amber-700 flex p-2 rounded-xl">
+            <img src="male_placeholder.jpg" alt="Male Placeholder" class="box-border size-16 rounded-full"/>
+            <div>
+                <h4 class="px-2">John Voiceowitch</h4>
+                <SmallAudioTrack/>
+            </div>
+        </div>
+    }
+}
+
+#[component]
+fn SmallAudioTrack() -> impl IntoView {
+    view! {
+        <div class="px-2">
+            <audio controls>
+                <source src="audio_placeholder.flac"></source>
+            </audio>
+        </div>
+    }
 }
