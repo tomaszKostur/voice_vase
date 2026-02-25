@@ -67,6 +67,7 @@ fn HomePage() -> impl IntoView {
         </MainLayout>
         <O_Nas/>
         <ActorSmallOverview/>
+        <ActorSmallOverview image_path=String::from("female_placeholder.png")/>
     }
 }
 
@@ -172,24 +173,34 @@ fn ListOfActors() -> impl IntoView {
 
 
 #[component]
-fn ActorSmallOverview() -> impl IntoView {
+fn ActorSmallOverview(
+    #[prop(default = String::from("male_placeholder.jpg"))]
+    image_path: String,
+    #[prop(default = String::from("<Actor Full name>"))]
+    full_name: String,
+    #[prop(default = String::from("audio_placeholder.flac"))]
+    audio_path: String
+) -> impl IntoView {
     view! {
         <div class="bg-amber-700 flex p-2 rounded-xl">
-            <img src="male_placeholder.jpg" alt="Male Placeholder" class="box-border size-16 rounded-full"/>
+            <img src=image_path alt="Image Placeholder" class="box-border size-16 rounded-full"/>
             <div>
-                <h4 class="px-2">John Voiceowitch</h4>
-                <SmallAudioTrack/>
+                <h4 class="px-2">{full_name}</h4>
+                <SmallAudioTrack audio_path=audio_path/>
             </div>
         </div>
     }
 }
 
 #[component]
-fn SmallAudioTrack() -> impl IntoView {
+fn SmallAudioTrack(
+    #[prop(default = String::from("audio_placeholder.flac"))]
+    audio_path: String
+) -> impl IntoView {
     view! {
         <div class="px-2">
             <audio controls>
-                <source src="audio_placeholder.flac"></source>
+                <source src=audio_path></source>
             </audio>
         </div>
     }
