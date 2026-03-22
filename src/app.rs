@@ -2,7 +2,7 @@ use leptos::{html::button, prelude::*};
 use leptos_meta::{provide_meta_context, MetaTags, Stylesheet, Title};
 use leptos_router::{
     components::{Route, Router, Routes},
-    StaticSegment,
+    path, StaticSegment,
 };
 
 pub fn shell(options: LeptosOptions) -> impl IntoView {
@@ -44,9 +44,49 @@ pub fn App() -> impl IntoView {
             <main>
                 <Routes fallback=|| "Page not found.".into_view()>
                     <Route path=StaticSegment("") view=HomePage/>
+                    <Route path=path!("/about_us") view=AboutUs  />
+                    <Route path=path!("/search") view=Search  />
+                    <Route path=path!("/new_actors") view=NewActors  />
+                    <Route path=path!("/faq") view=FAQ  />
                 </Routes>
             </main>
         </Router>
+    }
+}
+
+#[component]
+fn AboutUs() -> impl IntoView {
+    view! {
+        <MainLayout>
+            <p> About Us placeholder </p>
+        </MainLayout>
+    }
+}
+
+#[component]
+fn Search() -> impl IntoView {
+    view! {
+        <MainLayout>
+            <p> Search placeholder </p>
+        </MainLayout>
+    }
+}
+
+#[component]
+fn NewActors() -> impl IntoView {
+    view! {
+        <MainLayout>
+            <p> New Actors placeholder </p>
+        </MainLayout>
+    }
+}
+
+#[component]
+fn FAQ() -> impl IntoView {
+    view! {
+        <MainLayout>
+            <p> FAQ placeholder </p>
+        </MainLayout>
     }
 }
 
@@ -72,8 +112,7 @@ fn HomePage() -> impl IntoView {
 }
 
 #[component]
-fn MainLayout(children: Children) -> impl IntoView{
-
+fn MainLayout(children: Children) -> impl IntoView {
     view! {
         <MenuBar/>
         <main class="pt-40 md:pt-44">
@@ -93,35 +132,36 @@ fn TitleBar() -> impl IntoView {
 
 #[component]
 fn MenuBar() -> impl IntoView {
+    let button_styling = "block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent";
+    let navbar_burger_style = "inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-body rounded-base md:hidden hover:bg-neutral-secondary-soft hover:text-heading focus:outline-none focus:ring-2 focus:ring-neutral-tertiary";
+    let navbar_ul_style = "font-medium flex flex-col p-4 md:p-0 mt-4 border border-default rounded-base bg-neutral-secondary-soft md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-neutral-primary";
+
     view! {
 
     <nav class="bg-neutral-primary fixed w-full z-20 top-0 start-0 border-b border-default">
       <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <a class="flex items-center space-x-3 rtl:space-x-reverse">
+        <a class="flex items-center space-x-3 rtl:space-x-reverse" href="/">
             // <img src="https://flowbite.com/docs/images/logo.svg" class="h-7" alt="Flowbite Logo" />
             <Microphone/>
             <span class="self-center text-xl text-heading font-semibold whitespace-nowrap">Baza Głosów</span>
         </a>
-        <button data-collapse-toggle="navbar-default" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-body rounded-base md:hidden hover:bg-neutral-secondary-soft hover:text-heading focus:outline-none focus:ring-2 focus:ring-neutral-tertiary" aria-controls="navbar-default" aria-expanded="false">
+        <button data-collapse-toggle="navbar-default" type="button" class=navbar_burger_style aria-controls="navbar-default" aria-expanded="false">
             <span class="sr-only">Open main menu</span>
             <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M5 7h14M5 12h14M5 17h14"/></svg>
         </button>
         <div class="hidden w-full md:block md:w-auto" id="navbar-default">
-          <ul class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-default rounded-base bg-neutral-secondary-soft md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-neutral-primary">
+          <ul class=navbar_ul_style>
             <li>
-              <a href="#" class="block py-2 px-3 text-white bg-brand rounded md:bg-transparent md:text-fg-brand md:p-0" aria-current="page">Home</a>
+              <a href="/search" class=button_styling >Szukaj</a>
             </li>
             <li>
-              <a href="#" class="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent">Szukaj</a>
+              <a href="/new_actors" class=button_styling>Nowi Aktorzy</a>
             </li>
             <li>
-              <a href="#" class="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent">Nowi Aktorzy</a>
+              <a href="/about_us" class=button_styling>O Nas</a>
             </li>
             <li>
-              <a href="#" class="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent">O Nas</a>
-            </li>
-            <li>
-              <a href="#" class="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent">FAQ</a>
+              <a href="/faq" class=button_styling>FAQ</a>
             </li>
           </ul>
         </div>
@@ -134,13 +174,13 @@ fn MenuBar() -> impl IntoView {
 #[component]
 fn O_Nas() -> impl IntoView {
     view! {
-            <h3>O Nas</h3>
-            <ul>
-                <li class="bg-amber-600">Propagowanie artystów</li>
-                <li>Widoczność</li>
-                <li>Współpraca</li>
-            </ul>
-        }
+        <h3>O Nas</h3>
+        <ul>
+            <li class="bg-amber-600">Propagowanie artystów</li>
+            <li>Widoczność</li>
+            <li>Współpraca</li>
+        </ul>
+    }
 }
 
 #[component]
@@ -159,7 +199,6 @@ fn Microphone() -> impl IntoView {
         }
 }
 
-
 #[component]
 fn ListOfActors() -> impl IntoView {
     view! {
@@ -169,17 +208,11 @@ fn ListOfActors() -> impl IntoView {
     }
 }
 
-
-
-
 #[component]
 fn ActorSmallOverview(
-    #[prop(default = String::from("male_placeholder.jpg"))]
-    image_path: String,
-    #[prop(default = String::from("<Actor Full name>"))]
-    full_name: String,
-    #[prop(default = String::from("audio_placeholder.flac"))]
-    audio_path: String
+    #[prop(default = String::from("male_placeholder.jpg"))] image_path: String,
+    #[prop(default = String::from("<Actor Full name>"))] full_name: String,
+    #[prop(default = String::from("audio_placeholder.flac"))] audio_path: String,
 ) -> impl IntoView {
     view! {
         <div class="bg-amber-700 flex p-2 rounded-xl">
@@ -194,8 +227,7 @@ fn ActorSmallOverview(
 
 #[component]
 fn SmallAudioTrack(
-    #[prop(default = String::from("audio_placeholder.flac"))]
-    audio_path: String
+    #[prop(default = String::from("audio_placeholder.flac"))] audio_path: String,
 ) -> impl IntoView {
     view! {
         <div class="px-2">

@@ -16,6 +16,7 @@ services:
       - ./01-create_login_table.sql:/docker-entrypoint-initdb.d/01-create_login_table.sql
       - ./02-create_monitoring_table.sql:/docker-entrypoint-initdb.d/02-create_monitoring_table.sql
       - ./03-create_actors_and_resources_tables.sql:/docker-entrypoint-initdb.d/03-create_actors_and_resources_tables.sql
+      - ./04-fill_actors_and_resources_with_examples.sql:/docker-entrypoint-initdb.d/04-fill_actors_and_resources_with_examples.sql
 
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
