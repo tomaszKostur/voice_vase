@@ -14,13 +14,14 @@ pub fn shell(options: LeptosOptions) -> impl IntoView {
                 <meta name="viewport" content="width=device-width, initial-scale=1"/>
                 <AutoReload options=options.clone() />
                 <HydrationScripts options/>
+                <Stylesheet id="baza_glosow" href="/pkg/voice_base.css"/>
+                <link rel="shortcut icon" type="image/ico" href="/favicon.ico"/>
+                <Title text="Baza Głosów"/>
                 <MetaTags/>
             </head>
-            <body>
+            <body class="bg-gray-400-400">
                 <App/>
                 <script src="flowbite.min.js"></script>
-                // <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
-
             </body>
         </html>
     }
@@ -34,14 +35,13 @@ pub fn App() -> impl IntoView {
     view! {
         // injects a stylesheet into the document <head>
         // id=leptos means cargo-leptos will hot-reload this stylesheet
-        <Stylesheet id="baza_glosow" href="/pkg/voice_base.css"/>
+        // <Stylesheet id="baza_glosow" href="/pkg/voice_base.css"/>
 
         // sets the document title
-        <Title text="Baza Głosów"/>
-
+        // <Title text="Baza Głosów"/>
         // content for this welcome page
         <Router>
-            <main>
+            <main class="min-h-screen bg-gray-100 flex items-center justify-center p-4 sm:p-6 lg:p-8">
                 <Routes fallback=|| "Page not found.".into_view()>
                     <Route path=StaticSegment("") view=HomePage/>
                     <Route path=path!("/about_us") view=AboutUs  />
@@ -53,6 +53,169 @@ pub fn App() -> impl IntoView {
         </Router>
     }
 }
+
+
+
+/// Renders the home page of your application.
+#[component]
+fn HomePage() -> impl IntoView {
+    // Creates a reactive value to update the button
+    // let count = RwSignal::new(0);
+    // let on_click = move |_| *count.write() += 1;
+
+    // view! {
+    //     <h1>"Welcome to Leptos!"</h1>
+    //     <button on:click=on_click>"Click Me: " {count}</button>
+    // }
+    view! {
+        <MainLayout>
+        <ActorSmallOverview/>
+        <ActorSmallOverview image_path=String::from("female_placeholder.png")/>
+        </MainLayout>
+        // <O_Nas/>
+
+    }
+}
+
+#[component]
+fn MainLayout(children: Children) -> impl IntoView {
+    let a4_container_style = r#"
+            w-full max-w-[794px]     /* ≈ A4 width at 96dpi */
+            min-h-[1123px]           /* ≈ A4 height at 96dpi */
+            bg-white
+            shadow-xl
+            shadow-black/10
+            overflow-hidden
+            print:shadow-none
+            print:min-h-0
+            "#;
+  
+    view! {
+        <div class=a4_container_style>
+            <MenuBar/>
+            <main class="">
+                {children()}
+            </main>
+        </div>
+    }
+}
+
+#[component]
+fn TitleBar() -> impl IntoView {
+    view! {
+        <h1>Baza Głosów</h1>
+    }
+}
+
+#[component]
+fn MenuBar() -> impl IntoView {
+    let button_styling = "block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent";
+    let navbar_burger_style = "inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-body rounded-base md:hidden hover:bg-neutral-secondary-soft hover:text-heading focus:outline-none focus:ring-2 focus:ring-neutral-tertiary";
+    let navbar_ul_style = "font-medium flex flex-col p-4 md:p-0 mt-4 border border-default rounded-base bg-neutral-secondary-soft md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-neutral-primary";
+    let nav_root_style = "bg-neutral-primary border-default border-b";//"bg-neutral-primary fixed  z-20 top-0 start-0 border-b border-default";
+
+    view! {
+
+    <nav class=nav_root_style>
+        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+            <a class="flex items-center space-x-3 rtl:space-x-reverse" href="/">
+                // <img src="https://flowbite.com/docs/images/logo.svg" class="h-7" alt="Flowbite Logo" />
+                <Microphone/>
+                <span class="self-center text-xl text-heading font-semibold whitespace-nowrap">Baza Głosów</span>
+            </a>
+            <button data-collapse-toggle="navbar-default" type="button" class=navbar_burger_style aria-controls="navbar-default" aria-expanded="false">
+                <span class="sr-only">Open main menu</span>
+                <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M5 7h14M5 12h14M5 17h14"/></svg>
+            </button>
+            <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+                <ul class=navbar_ul_style>
+                    <li>
+                    <a href="/search" class=button_styling >Szukaj</a>
+                    </li>
+                    <li>
+                    <a href="/new_actors" class=button_styling>Nowi Aktorzy</a>
+                    </li>
+                    <li>
+                    <a href="/about_us" class=button_styling>O Nas</a>
+                    </li>
+                    <li>
+                    <a href="/faq" class=button_styling>FAQ</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    }
+}
+
+#[component]
+fn O_Nas() -> impl IntoView {
+    view! {
+        <h3>O Nas</h3>
+        <ul>
+            <li class="bg-amber-600">Propagowanie artystów</li>
+            <li>Widoczność</li>
+            <li>Współpraca</li>
+        </ul>
+    }
+}
+
+#[component]
+fn Microphone() -> impl IntoView {
+    view! {
+        <svg width="80" height="80" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+      <path d="M30 20 L50 20 L50 60 L30 60 Z M40 60 L40 75" stroke="#000" stroke-width="6" fill="none" stroke-linecap="round"/>
+      <circle cx="40" cy="30" r="12" fill="none" stroke="#000" stroke-width="6"/>
+      <g fill="none" stroke="#000" stroke-width="5" stroke-linecap="round">
+        <path d="M20 40 Q 5 30  -5 40"/>
+        <path d="M15 40 Q -5 25 -15 40" opacity="0.6"/>
+        <path d="M60 40 Q 75 30 85 40"/>
+        <path d="M65 40 Q 85 25 95 40" opacity="0.6"/>
+      </g>
+    </svg>
+    }
+}
+
+#[component]
+fn ListOfActors() -> impl IntoView {
+    view! {
+        <div class="bg-neutral-primary-soft block max-w-sm p-6 border border-default rounded-base shadow-xs hover:bg-neutral-secondary-medium">
+            LIST OF ACTORS PLACEHOLDER
+        </div>
+    }
+}
+
+#[component]
+fn ActorSmallOverview(
+    #[prop(default = String::from("male_placeholder.jpg"))] image_path: String,
+    #[prop(default = String::from("<Actor Full name>"))] full_name: String,
+    #[prop(default = String::from("audio_placeholder.flac"))] audio_path: String,
+) -> impl IntoView {
+    view! {
+        <div class="bg-amber-700 flex p-2 rounded-xl m-4">
+            <img src=image_path alt="Image Placeholder" class="box-border size-16 rounded-full"/>
+            <div>
+                <h4 class="px-2">{full_name}</h4>
+                <SmallAudioTrack audio_path=audio_path/>
+            </div>
+        </div>
+    }
+}
+
+#[component]
+fn SmallAudioTrack(
+    #[prop(default = String::from("audio_placeholder.flac"))] audio_path: String,
+) -> impl IntoView {
+    view! {
+        <div class="px-2">
+            <audio controls>
+                <source src=audio_path></source>
+            </audio>
+        </div>
+    }
+}
+
+
 
 #[component]
 fn AboutUs() -> impl IntoView {
@@ -87,153 +250,5 @@ fn FAQ() -> impl IntoView {
         <MainLayout>
             <p> FAQ placeholder </p>
         </MainLayout>
-    }
-}
-
-/// Renders the home page of your application.
-#[component]
-fn HomePage() -> impl IntoView {
-    // Creates a reactive value to update the button
-    // let count = RwSignal::new(0);
-    // let on_click = move |_| *count.write() += 1;
-
-    // view! {
-    //     <h1>"Welcome to Leptos!"</h1>
-    //     <button on:click=on_click>"Click Me: " {count}</button>
-    // }
-    view! {
-        <MainLayout>
-            <p> huehuehue </p>
-        </MainLayout>
-        <O_Nas/>
-        <ActorSmallOverview/>
-        <ActorSmallOverview image_path=String::from("female_placeholder.png")/>
-    }
-}
-
-#[component]
-fn MainLayout(children: Children) -> impl IntoView {
-    view! {
-        <MenuBar/>
-        <main class="pt-40 md:pt-44">
-            <a href="#" class= "bg-neutral-primary-soft block max-w-sm p-6 border border-default rounded-base shadow-xs hover:bg-neutral-secondary-medium">
-                {children()}
-            </a>
-        </main>
-    }
-}
-
-#[component]
-fn TitleBar() -> impl IntoView {
-    view! {
-        <h1>Baza Głosów</h1>
-    }
-}
-
-#[component]
-fn MenuBar() -> impl IntoView {
-    let button_styling = "block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent";
-    let navbar_burger_style = "inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-body rounded-base md:hidden hover:bg-neutral-secondary-soft hover:text-heading focus:outline-none focus:ring-2 focus:ring-neutral-tertiary";
-    let navbar_ul_style = "font-medium flex flex-col p-4 md:p-0 mt-4 border border-default rounded-base bg-neutral-secondary-soft md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-neutral-primary";
-
-    view! {
-
-    <nav class="bg-neutral-primary fixed w-full z-20 top-0 start-0 border-b border-default">
-      <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <a class="flex items-center space-x-3 rtl:space-x-reverse" href="/">
-            // <img src="https://flowbite.com/docs/images/logo.svg" class="h-7" alt="Flowbite Logo" />
-            <Microphone/>
-            <span class="self-center text-xl text-heading font-semibold whitespace-nowrap">Baza Głosów</span>
-        </a>
-        <button data-collapse-toggle="navbar-default" type="button" class=navbar_burger_style aria-controls="navbar-default" aria-expanded="false">
-            <span class="sr-only">Open main menu</span>
-            <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M5 7h14M5 12h14M5 17h14"/></svg>
-        </button>
-        <div class="hidden w-full md:block md:w-auto" id="navbar-default">
-          <ul class=navbar_ul_style>
-            <li>
-              <a href="/search" class=button_styling >Szukaj</a>
-            </li>
-            <li>
-              <a href="/new_actors" class=button_styling>Nowi Aktorzy</a>
-            </li>
-            <li>
-              <a href="/about_us" class=button_styling>O Nas</a>
-            </li>
-            <li>
-              <a href="/faq" class=button_styling>FAQ</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-
-        }
-}
-
-#[component]
-fn O_Nas() -> impl IntoView {
-    view! {
-        <h3>O Nas</h3>
-        <ul>
-            <li class="bg-amber-600">Propagowanie artystów</li>
-            <li>Widoczność</li>
-            <li>Współpraca</li>
-        </ul>
-    }
-}
-
-#[component]
-fn Microphone() -> impl IntoView {
-    view! {
-        <svg width="80" height="80" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
-      <path d="M30 20 L50 20 L50 60 L30 60 Z M40 60 L40 75" stroke="#000" stroke-width="6" fill="none" stroke-linecap="round"/>
-      <circle cx="40" cy="30" r="12" fill="none" stroke="#000" stroke-width="6"/>
-      <g fill="none" stroke="#000" stroke-width="5" stroke-linecap="round">
-        <path d="M20 40 Q 5 30  -5 40"/>
-        <path d="M15 40 Q -5 25 -15 40" opacity="0.6"/>
-        <path d="M60 40 Q 75 30 85 40"/>
-        <path d="M65 40 Q 85 25 95 40" opacity="0.6"/>
-      </g>
-    </svg>
-        }
-}
-
-#[component]
-fn ListOfActors() -> impl IntoView {
-    view! {
-        <div class="bg-neutral-primary-soft block max-w-sm p-6 border border-default rounded-base shadow-xs hover:bg-neutral-secondary-medium">
-            LIST OF ACTORS PLACEHOLDER
-        </div>
-    }
-}
-
-#[component]
-fn ActorSmallOverview(
-    #[prop(default = String::from("male_placeholder.jpg"))] image_path: String,
-    #[prop(default = String::from("<Actor Full name>"))] full_name: String,
-    #[prop(default = String::from("audio_placeholder.flac"))] audio_path: String,
-) -> impl IntoView {
-    view! {
-        <div class="bg-amber-700 flex p-2 rounded-xl">
-            <img src=image_path alt="Image Placeholder" class="box-border size-16 rounded-full"/>
-            <div>
-                <h4 class="px-2">{full_name}</h4>
-                <SmallAudioTrack audio_path=audio_path/>
-            </div>
-        </div>
-    }
-}
-
-#[component]
-fn SmallAudioTrack(
-    #[prop(default = String::from("audio_placeholder.flac"))] audio_path: String,
-) -> impl IntoView {
-    view! {
-        <div class="px-2">
-            <audio controls>
-                <source src=audio_path></source>
-            </audio>
-        </div>
     }
 }
