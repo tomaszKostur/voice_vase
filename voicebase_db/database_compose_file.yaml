@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:latest
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: do_change_me_later_123
+      POSTGRES_USER: postgres       # optional (default = postgres)
+      # INFO: initially I've tried to change it but I get some errors. TODO: consider change POSTGRES_USER later
+      POSTGRES_DB: voicebase     # optional (default = name of user)
+    ports:
+      - "5432:5432"
+    volumes:
+      # - postgres-data-voicebase:/var/lib/postgresql
+      - ./01-create_login_table.sql:/docker-entrypoint-initdb.d/01-create_login_table.sql
+      - ./02-create_monitoring_table.sql:/docker-entrypoint-initdb.d/02-create_monitoring_table.sql
+      - ./03-create_actors_and_resources_tables.sql:/docker-entrypoint-initdb.d/03-create_actors_and_resources_tables.sql
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+# INFO: I do not need persistemce database right now
+# volumes:
+#   postgres-data-voicebase:
+#     name: postgres-data-voicebase-latest
