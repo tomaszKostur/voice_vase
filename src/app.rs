@@ -16,7 +16,6 @@ pub fn shell(options: LeptosOptions) -> impl IntoView {
                 <HydrationScripts options/>
                 <Stylesheet id="baza_glosow" href="/pkg/voice_base.css"/>
                 <link rel="shortcut icon" type="image/ico" href="/favicon.ico"/>
-                <Title text="Baza Głosów"/>
                 <MetaTags/>
             </head>
             <body class="bg-gray-400-400">
@@ -33,12 +32,9 @@ pub fn App() -> impl IntoView {
     provide_meta_context();
 
     view! {
-        // injects a stylesheet into the document <head>
-        // id=leptos means cargo-leptos will hot-reload this stylesheet
-        // <Stylesheet id="baza_glosow" href="/pkg/voice_base.css"/>
 
         // sets the document title
-        // <Title text="Baza Głosów"/>
+        <Title text="Baza Głosów"/> // INFO: I need to setup title here because it needs provide_meta_context to be called
         // content for this welcome page
         <Router>
             <main class="min-h-screen bg-gray-100 flex items-center justify-center p-4 sm:p-6 lg:p-8">
@@ -48,6 +44,7 @@ pub fn App() -> impl IntoView {
                     <Route path=path!("/search") view=Search  />
                     <Route path=path!("/new_actors") view=NewActors  />
                     <Route path=path!("/faq") view=FAQ  />
+                    <Route path=path!("/login") view=Login  />
                 </Routes>
             </main>
         </Router>
@@ -69,8 +66,8 @@ fn HomePage() -> impl IntoView {
     // }
     view! {
         <MainLayout>
-        <ActorSmallOverview/>
-        <ActorSmallOverview image_path=String::from("female_placeholder.png")/>
+            <ActorSmallOverview/>
+            <ActorSmallOverview image_path=String::from("female_placeholder.png")/>
         </MainLayout>
         // <O_Nas/>
 
@@ -130,16 +127,19 @@ fn MenuBar() -> impl IntoView {
             <div class="hidden w-full md:block md:w-auto" id="navbar-default">
                 <ul class=navbar_ul_style>
                     <li>
-                    <a href="/search" class=button_styling >Szukaj</a>
+                        <a href="/search" class=button_styling >Szukaj</a>
                     </li>
                     <li>
-                    <a href="/new_actors" class=button_styling>Nowi Aktorzy</a>
+                        <a href="/new_actors" class=button_styling>Nowi Aktorzy</a>
                     </li>
                     <li>
-                    <a href="/about_us" class=button_styling>O Nas</a>
+                        <a href="/about_us" class=button_styling>O Nas</a>
                     </li>
                     <li>
-                    <a href="/faq" class=button_styling>FAQ</a>
+                        <a href="/faq" class=button_styling>FAQ</a>
+                    </li>
+                    <li>
+                        <a href="/login" class=button_styling>Login</a>
                     </li>
                 </ul>
             </div>
@@ -237,18 +237,38 @@ fn Search() -> impl IntoView {
 
 #[component]
 fn NewActors() -> impl IntoView {
+    // Creates a reactive value to update the button
+    // let count = RwSignal::new(0);
+    // let on_click = move |_| *count.write() += 1;
+
+    // view! {
+    //     <h1>"Welcome to Leptos!"</h1>
+    //     <button on:click=on_click>"Click Me: " {count}</button>
+    // }
     view! {
         <MainLayout>
-            <p> New Actors placeholder </p>
+            <ActorSmallOverview full_name=String::from("Adam Adamski") />
+            <ActorSmallOverview full_name=String::from("Basia Basiowska") image_path=String::from("female_placeholder.png") />
+            <ActorSmallOverview full_name=String::from("Cezary Cezarewski") />
         </MainLayout>
     }
 }
+
 
 #[component]
 fn FAQ() -> impl IntoView {
     view! {
         <MainLayout>
             <p> FAQ placeholder </p>
+        </MainLayout>
+    }
+}
+
+#[component]
+fn Login() -> impl IntoView {
+    view! {
+        <MainLayout>
+            <p> Login placeholder </p>
         </MainLayout>
     }
 }
