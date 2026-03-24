@@ -33,7 +33,7 @@ Additionally, Cargo.toml may need updating as new versions of the dependencies a
 ## Running your project
 
 ```bash
-cargo leptos watch
+DATABASE_URL=sqlite:voice_base.db cargo leptos watch
 ```
 
 ## Installing Additional Tools

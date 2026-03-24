@@ -4,6 +4,7 @@ use leptos_router::{
     components::{Route, Router, Routes},
     path, StaticSegment,
 };
+use crate::app_server;
 
 pub fn shell(options: LeptosOptions) -> impl IntoView {
     view! {
@@ -269,15 +270,13 @@ fn Login() -> impl IntoView {
     let flowbite_button = "text-white bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none";
     view! {
         <MainLayout>
-            <button class=flowbite_button on:click=move |_| {leptos::task::spawn_local( async {let _ = trigger_log_on_server().await;});} >
+            <button class=flowbite_button on:click=move |_| {leptos::task::spawn_local( async {let _ = app_server::trigger_log_on_server().await;});} >
             Log on server
+            </button>
+            <button class=flowbite_button on:click=move |_| {leptos::task::spawn_local( async {let db_data = app_server::get_example_data_from_db().await.unwrap(); leptos::logging::log!("db_data: {db_data:?}")});} >
+            Get example database data
             </button>
         </MainLayout>
     }
 }
 
-#[server]
-pub async fn trigger_log_on_server() -> Result<(), ServerFnError> {
-    println!("Sanity check log");
-    Ok(())
-}

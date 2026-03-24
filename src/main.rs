@@ -1,18 +1,3 @@
-
-// #[cfg(feature = "ssr")]
-// pub mod ssr {
-//     // use http::{header::SET_COOKIE, HeaderMap, HeaderValue, StatusCode};
-//     use leptos::server_fn::ServerFnError;
-//     use sqlx::{Connection, SqliteConnection};
-
-//     pub async fn db() -> Result<SqliteConnection, ServerFnError> {
-//         Ok(SqliteConnection::connect("sqlite:Todos.db").await?)
-//     }
-// }
-
-
-
-
 #[cfg(feature = "ssr")]
 #[tokio::main]
 async fn main() {
@@ -29,7 +14,8 @@ async fn main() {
     // Generate the list of routes in your Leptos App
     let routes = generate_route_list(App);
 
-    
+    // INFO: what I see in examples is not clear for me right mow how could i share connection to the db in server, or should I in the first place?
+    // INFO: for now let's create new connection every time needed.
     // let _db_pool = sqlx::PgPool::connect("postgres://postgres:do_change_me_later_123/localhost/voidebase").await.expect("Cannot connect to DB");
     // let mut conn = db().await.expect("couldn't connect to DB");
 
