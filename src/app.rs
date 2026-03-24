@@ -266,9 +266,18 @@ fn FAQ() -> impl IntoView {
 
 #[component]
 fn Login() -> impl IntoView {
+    let flowbite_button = "text-white bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none";
     view! {
         <MainLayout>
-            <p> Login placeholder </p>
+            <button class=flowbite_button on:click=move |_| {leptos::task::spawn_local( async {let _ = trigger_log_on_server().await;});} >
+            Log on server
+            </button>
         </MainLayout>
     }
+}
+
+#[server]
+pub async fn trigger_log_on_server() -> Result<(), ServerFnError> {
+    println!("Sanity check log");
+    Ok(())
 }

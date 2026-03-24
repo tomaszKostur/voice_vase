@@ -29,7 +29,8 @@ async fn main() {
     // Generate the list of routes in your Leptos App
     let routes = generate_route_list(App);
 
-    let db_pool = sqlx::PgPool::connect("postgres://postgres:do_change_me_later_123/localhost/voidebase").await.expect("Cannot connect to DB");
+    
+    // let _db_pool = sqlx::PgPool::connect("postgres://postgres:do_change_me_later_123/localhost/voidebase").await.expect("Cannot connect to DB");
     // let mut conn = db().await.expect("couldn't connect to DB");
 
     let app = Router::new()
