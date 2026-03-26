@@ -1,10 +1,10 @@
+use crate::app_server::{self, get_example_data_from_db};
 use leptos::{html::button, prelude::*};
 use leptos_meta::{provide_meta_context, MetaTags, Stylesheet, Title};
 use leptos_router::{
     components::{Route, Router, Routes},
     path, StaticSegment,
 };
-use crate::app_server;
 
 pub fn shell(options: LeptosOptions) -> impl IntoView {
     view! {
@@ -46,13 +46,13 @@ pub fn App() -> impl IntoView {
                     <Route path=path!("/new_actors") view=NewActors  />
                     <Route path=path!("/faq") view=FAQ  />
                     <Route path=path!("/login") view=Login  />
+                    <Route path=path!("/sandbox") view=Sandbox />
+                    <Route path=path!("/sandbox2") view=Sandbox2 />
                 </Routes>
             </main>
         </Router>
     }
 }
-
-
 
 /// Renders the home page of your application.
 #[component]
@@ -87,7 +87,7 @@ fn MainLayout(children: Children) -> impl IntoView {
             print:shadow-none
             print:min-h-0
             "#;
-  
+
     view! {
         <div class=a4_container_style>
             <MenuBar/>
@@ -110,7 +110,7 @@ fn MenuBar() -> impl IntoView {
     let button_styling = "block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent";
     let navbar_burger_style = "inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-body rounded-base md:hidden hover:bg-neutral-secondary-soft hover:text-heading focus:outline-none focus:ring-2 focus:ring-neutral-tertiary";
     let navbar_ul_style = "font-medium flex flex-col p-4 md:p-0 mt-4 border border-default rounded-base bg-neutral-secondary-soft md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-neutral-primary";
-    let nav_root_style = "bg-neutral-primary border-default border-b";//"bg-neutral-primary fixed  z-20 top-0 start-0 border-b border-default";
+    let nav_root_style = "bg-neutral-primary border-default border-b"; //"bg-neutral-primary fixed  z-20 top-0 start-0 border-b border-default";
 
     view! {
 
@@ -216,8 +216,6 @@ fn SmallAudioTrack(
     }
 }
 
-
-
 #[component]
 fn AboutUs() -> impl IntoView {
     view! {
@@ -255,7 +253,6 @@ fn NewActors() -> impl IntoView {
     }
 }
 
-
 #[component]
 fn FAQ() -> impl IntoView {
     view! {
@@ -267,16 +264,96 @@ fn FAQ() -> impl IntoView {
 
 #[component]
 fn Login() -> impl IntoView {
+    // let (paragraph_data, paragraph_data_setter) = signal(String::new());
+    let (foo, foo_set) = signal("default_foo".to_string());
+    let res = Resource::new(move || { foo.get()}, move |_| async move {let sd = app_server::get_example_data_from_db().await.unwrap(); foo_set.set(sd);});
+    
+
     let flowbite_button = "text-white bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none";
     view! {
         <MainLayout>
             <button class=flowbite_button on:click=move |_| {leptos::task::spawn_local( async {let _ = app_server::trigger_log_on_server().await;});} >
             Log on server
             </button>
-            <button class=flowbite_button on:click=move |_| {leptos::task::spawn_local( async {let db_data = app_server::get_example_data_from_db().await.unwrap(); leptos::logging::log!("db_data: {db_data:?}")});} >
+            <button class=flowbite_button on:click=move |_| {
+                 res.refetch();
+                }
+            >
             Get example database data
             </button>
+            <p>{ foo.get() }</p>
         </MainLayout>
     }
 }
 
+
+#[component]
+fn Sandbox() -> impl IntoView {
+    let (sig_getter, sig_setter) = signal("default_signal".to_string());
+    
+    let flowbite_button = "text-white bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none";
+    view! {
+        <MainLayout>
+            <button class=flowbite_button
+                on:click=move |ev| {
+                    let ets = event_target_value(&ev);
+                    leptos::logging::log!("Clicked sandbox 1, ev: {ev:?}, etv: {ets}");
+                    sig_setter.set("from sandbox 1".to_string());
+                } >
+                Sandbox 1
+            </button>
+
+            <button class=flowbite_button
+                on:click=move |ev| {
+                    leptos::logging::log!("Clicked sandbox 2, ev: {ev:?} "); 
+                    sig_setter.set("from sandbox 2".to_string());
+                } >
+                Sandbox 2
+            </button>
+            <p>{ move || sig_getter.get() }</p>
+        </MainLayout>
+    }
+}
+
+#[component]
+fn Sandbox2() -> impl IntoView {
+
+    let (resource_counter, resource_counter_set) = signal(0);
+    let res = Resource::new(move || {resource_counter.get()},
+                            |_| async move {get_example_data_from_db().await}
+                           );
+    let res_value = move || {
+        res.get()
+            .map(
+                |value| {leptos::logging::log!("Server value:  {value:?}");
+                         format!("Server returned: {value:?}")}
+                ).unwrap_or_else(|| "Loading".into())
+    };
+
+    let flowbite_button = "text-white bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none";
+    view! {
+        <MainLayout>
+            <button class=flowbite_button
+                on:click=move |_| {
+                    *resource_counter_set.write() +=1;
+                    let counter_value = resource_counter.get();
+                    leptos::logging::log!("Clicked sandbox 1, counter: {counter_value}");
+                    
+                } >
+                Sandbox 1
+            </button>
+
+            <Suspense
+            fallback=move || view! { <p>"Loading..."</p> }
+        >
+            {move || Suspend::new(async move {
+                let a = res.get();
+                view! {
+                    <h3>"Server resource:"</h3>
+                    <p>{a}</p>
+                }
+            })}
+            </Suspense>
+        </MainLayout>
+    }
+}

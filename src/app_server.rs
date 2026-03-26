@@ -1,6 +1,9 @@
-use std::result;
+
+
+use std::time::Duration;
 
 use leptos::prelude::*;
+// use tokio::time::sleep;
 
 
 #[cfg(feature = "ssr")]
@@ -25,5 +28,11 @@ pub async fn trigger_log_on_server() -> Result<(), ServerFnError> {
 pub async fn get_example_data_from_db() -> Result<String, ServerFnError> {
     let mut db = ssr::db_connection().await.expect("Cannot connect to DB");
     let result = sqlx::query!("select email from actor_table;").fetch_one(&mut db).await?;
+    leptos::logging::debug_log!("From server get_example_data_from_db");
     Ok(String::from(format!("{result:?}")))
+}
+
+#[server]
+pub async fn get_server_greeting(name: String) -> Result<String, ServerFnError> {
+    Ok(format!("greetings {name}!"))
 }
