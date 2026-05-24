@@ -1,4 +1,4 @@
-use crate::app_server::{self, get_example_data_from_db};
+use crate::app_server::{self, get_example_data_from_db, get_error_from_server};
 use leptos::{html::button, prelude::*};
 use leptos_meta::{provide_meta_context, MetaTags, Stylesheet, Title};
 use leptos_router::{
@@ -48,6 +48,7 @@ pub fn App() -> impl IntoView {
                     <Route path=path!("/login") view=Login  />
                     <Route path=path!("/sandbox") view=Sandbox />
                     <Route path=path!("/sandbox2") view=Sandbox2 />
+                    <Route path=path!("/sandbox3") view=Sandbox3 />
                 </Routes>
             </main>
         </Router>
@@ -289,6 +290,7 @@ fn Login() -> impl IntoView {
 
 #[component]
 fn Sandbox() -> impl IntoView {
+    // This sandbox shows basic toggle for local resources (signal)
     let (sig_getter, sig_setter) = signal("default_signal".to_string());
     
     let flowbite_button = "text-white bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none";
@@ -317,12 +319,49 @@ fn Sandbox() -> impl IntoView {
 
 #[component]
 fn Sandbox2() -> impl IntoView {
-
+    // Showw how to use server resource
     let (resource_counter, resource_counter_set) = signal(0);
     let res = Resource::new(move || {resource_counter.get()},
                             |_| async move {get_example_data_from_db().await}
                            );
-    let res_value = move || {
+
+    let flowbite_button = "text-white bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none";
+    view! {
+        <MainLayout>
+            <button class=flowbite_button
+                on:click=move |_| {
+                    *resource_counter_set.write() +=1;
+                    let counter_value = resource_counter.get();
+                    leptos::logging::log!("Clicked sandbox 2, counter: {counter_value}");
+                    
+                } >
+                Sandbox 2
+            </button>
+
+            <Suspense
+            fallback=move || view! { <p>"Loading..."</p> }
+        >
+            {move || Suspend::new(async move {
+                // let a = res.get();
+                let a = res;
+                view! {
+                    <h3>"Server resource:"</h3>
+                    <p>{a}</p>
+                }
+            })}
+            </Suspense>
+        </MainLayout>
+    }
+}
+
+#[component]
+fn Sandbox3() -> impl IntoView {
+    // Shows how app behaves when request returns error
+    let (resource_counter, resource_counter_set) = signal(0);
+    let res = Resource::new(move || {resource_counter.get()},
+                            |_| async move {get_error_from_server().await}
+                           );
+    let _res_value = move || {
         res.get()
             .map(
                 |value| {leptos::logging::log!("Server value:  {value:?}");
@@ -347,7 +386,7 @@ fn Sandbox2() -> impl IntoView {
             fallback=move || view! { <p>"Loading..."</p> }
         >
             {move || Suspend::new(async move {
-                let a = res.get();
+                let a = res;
                 view! {
                     <h3>"Server resource:"</h3>
                     <p>{a}</p>

@@ -89,3 +89,20 @@ Finally, run the server binary.
 ## Licensing
 
 This template itself is released under the Unlicense. You should replace the LICENSE for your own application with an appropriate license if you plan to release it publicly.
+
+## DEVDEV
+
+In order to launch for dev purposes
+```bash
+cargo leptos watch
+```
+
+To seek which process uses given port
+```bash
+lsof -i :3001
+```
+
+to kill the process
+```bash
+fuser -k 3001/tcp
+```

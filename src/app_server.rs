@@ -36,3 +36,8 @@ pub async fn get_example_data_from_db() -> Result<String, ServerFnError> {
 pub async fn get_server_greeting(name: String) -> Result<String, ServerFnError> {
     Ok(format!("greetings {name}!"))
 }
+
+#[server]
+pub async fn get_error_from_server() -> Result<String, ServerFnError>{
+    Err(ServerFnError::new("Error forced from server"))
+}
