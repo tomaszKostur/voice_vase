@@ -1,6 +1,7 @@
 
 
 use std::time::Duration;
+use serde::{Serialize, Deserialize};
 
 use leptos::prelude::*;
 // use tokio::time::sleep;
@@ -30,6 +31,21 @@ pub async fn get_example_data_from_db() -> Result<String, ServerFnError> {
     let result = sqlx::query!("select email from actor_table;").fetch_one(&mut db).await?;
     leptos::logging::debug_log!("From server get_example_data_from_db");
     Ok(String::from(format!("{result:?}")))
+}
+
+#[derive(Clone, Debug, Serialize, Deserialize)]
+pub struct Actor {
+    pub email: String,
+    pub about: String,
+    pub cooperation: String
+}
+
+#[server]
+pub async fn get_list_of_all_actors() -> Result<Vec<Actor>, ServerFnError> {
+    let act = Actor{email: String::from("Email"),
+                     about: String::from("About"),
+                     cooperation: String::from("Coop")};
+    Ok(vec![act])
 }
 
 #[server]

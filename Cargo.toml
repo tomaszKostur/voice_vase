@@ -17,6 +17,7 @@ tokio = { version = "1", features = ["rt-multi-thread"], optional = true }
 wasm-bindgen = { version = "0.2.106", optional = true }
 # INFO: I've added this dependency myself. Notice that there are 'optional' everywhere and the deps needs to be separated for hydrate and ssr dependencies
 sqlx = {version = "0.8.6", features = ["postgres", "runtime-tokio", "macros", "sqlite"], optional = true}
+serde = {version = "1.0.228" }
 
 
 [features]

@@ -50,6 +50,7 @@ pub fn App() -> impl IntoView {
                     <Route path=path!("/sandbox") view=Sandbox />
                     <Route path=path!("/sandbox2") view=Sandbox2 />
                     <Route path=path!("/sandbox3") view=Sandbox3 />
+                    <Route path=path!("/loa1") view=ListOfActorsSandbox />
                 </Routes>
             </main>
         </Router>
@@ -59,14 +60,7 @@ pub fn App() -> impl IntoView {
 /// Renders the home page of your application.
 #[component]
 fn HomePage() -> impl IntoView {
-    // Creates a reactive value to update the button
-    // let count = RwSignal::new(0);
-    // let on_click = move |_| *count.write() += 1;
 
-    // view! {
-    //     <h1>"Welcome to Leptos!"</h1>
-    //     <button on:click=on_click>"Click Me: " {count}</button>
-    // }
     view! {
         <MainLayout>
             <ActorSmallOverview/>
