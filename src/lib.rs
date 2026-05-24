@@ -1,5 +1,6 @@
 pub mod app;
 pub mod app_server;
+pub mod front_sandboxes;
 
 #[cfg(feature = "hydrate")]
 #[wasm_bindgen::prelude::wasm_bindgen]
