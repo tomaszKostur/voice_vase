@@ -97,6 +97,11 @@ In order to launch for dev purposes
 cargo leptos watch
 ```
 
+To run quick_dev test
+```bash
+cargo test --quiet  quick_dev --features ssr -- --nocapture
+```
+
 To seek which process uses given port
 ```bash
 lsof -i :3001

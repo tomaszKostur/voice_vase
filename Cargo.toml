@@ -44,6 +44,10 @@ lto = true
 codegen-units = 1
 panic = "abort"
 
+[dev-dependencies]
+anyhow = "1.0.102"
+httpc-test = "0.1.10"
+
 [package.metadata.leptos]
 # The name used by wasm-bindgen/cargo-leptos for the JS/WASM bundle. Defaults to the crate name
 output-name = "voice_base"
