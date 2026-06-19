@@ -7,14 +7,14 @@ edition = "2021"
 crate-type = ["cdylib", "rlib"]
 
 [dependencies]
-leptos = { version = "0.8.0", features = ["nightly"] }
-leptos_router = { version = "0.8.0", features = ["nightly"] }
-axum = { version = "0.8.0", optional = true }
+leptos = { version = "0.8.19", features = ["nightly"] }
+leptos_router = { version = "0.8.13", features = ["nightly"] }
+axum = { version = "0.8.9", optional = true }
 console_error_panic_hook = { version = "0.1", optional = true }
-leptos_axum = { version = "0.8.0", optional = true }
-leptos_meta = { version = "0.8.0" }
+leptos_axum = { version = "0.8.9", optional = true }
+leptos_meta = { version = "0.8.6" }
 tokio = { version = "1", features = ["rt-multi-thread"], optional = true }
-wasm-bindgen = { version = "0.2.106", optional = true }
+wasm-bindgen = { version = "0.2.125", optional = true }
 # INFO: I've added this dependency myself. Notice that there are 'optional' everywhere and the deps needs to be separated for hydrate and ssr dependencies
 sqlx = {version = "0.8.6", features = ["postgres", "runtime-tokio", "macros", "sqlite"], optional = true}
 serde = {version = "1.0.228" }

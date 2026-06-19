@@ -1,3 +1,6 @@
+#![allow(unused)] // WARNING: This is not for production
+#![allow(non_snake_case)] // INFO: Apparently this is legal. Pascal case in Lepos components are recommended way
+
 use crate::app_server::{self, get_example_data_from_db, get_error_from_server, get_list_of_all_actors};
 use leptos::{html::button, prelude::*};
 use leptos_meta::{provide_meta_context, MetaTags, Stylesheet, Title};
@@ -115,6 +118,7 @@ pub fn Sandbox3() -> impl IntoView {
     }
 }
 
+#[component]
 pub fn ListOfActorsSandbox() -> impl IntoView {
     let (resource_counter, resource_counter_set) = signal(0);
     let list_of_actors = Resource::new(move || {resource_counter.get()},

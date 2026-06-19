@@ -1,3 +1,6 @@
+#![allow(warnings)]
+
+
 #[cfg(feature = "ssr")]
 #[tokio::main]
 async fn main() {
@@ -7,7 +10,7 @@ async fn main() {
     use leptos::prelude::*;
     use leptos_axum::{generate_route_list, LeptosRoutes};
     use voice_base::app::*;
-    use voice_base::axum_sandbox::hello_axum_sandbox;
+    use voice_base::axum_sandbox::{get_axum_sandbox_router, hello_axum_sandbox};
 
     let conf = get_configuration(None).unwrap();
     let addr = conf.leptos_options.site_addr;
@@ -15,10 +18,12 @@ async fn main() {
     // Generate the list of routes in your Leptos App
     let routes_leptos = generate_route_list(App);
 
-    let axum_api_sandbox = Router::new().route(
-        "/axum_sb",
-        get(hello_axum_sandbox),
-    );
+    // INFO: Moved to axum sandbox
+    // let axum_api_sandbox = Router::new().route(
+    //     "/axum_sb",
+    //     get(hello_axum_sandbox),
+    // );
+    let  axum_api_sandbox = get_axum_sandbox_router();
 
     // INFO: what I see in examples is not clear for me right mow how could i share connection to the db in server, or should I in the first place?
     // INFO: for now let's create new connection every time needed.

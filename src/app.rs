@@ -1,3 +1,5 @@
+#![allow(unused)]
+
 use crate::app_server::{self, get_example_data_from_db, get_error_from_server};
 use leptos::{html::button, prelude::*};
 use leptos_meta::{provide_meta_context, MetaTags, Stylesheet, Title};
