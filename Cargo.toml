@@ -18,6 +18,9 @@ wasm-bindgen = { version = "0.2.125", optional = true }
 # INFO: I've added this dependency myself. Notice that there are 'optional' everywhere and the deps needs to be separated for hydrate and ssr dependencies
 sqlx = {version = "0.8.6", features = ["postgres", "runtime-tokio", "macros", "sqlite"], optional = true}
 serde = {version = "1.0.228" }
+serde_json = "1.0.150"
+tower-cookies = "0.11.0"
+tower-http = "0.7.0"
 
 
 [features]
