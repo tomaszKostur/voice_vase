@@ -1,24 +1,95 @@
-This is free and unencumbered software released into the public domain.
+# Source-Available License – All Rights Reserved
 
-Anyone is free to copy, modify, publish, use, compile, sell, or
-distribute this software, either in source code form or as a compiled
-binary, for any purpose, commercial or non-commercial, and by any
-means.
+Copyright (c) 2026 Tomasz Kostur
 
-In jurisdictions that recognize copyright laws, the author or authors
-of this software dedicate any and all copyright interest in the
-software to the public domain. We make this dedication for the benefit
-of the public at large and to the detriment of our heirs and
-successors. We intend this dedication to be an overt act of
-relinquishment in perpetuity of all present and future rights to this
-software under copyright law.
+All rights reserved.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
-OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
-ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-OTHER DEALINGS IN THE SOFTWARE.
+## 1. Ownership
 
-For more information, please refer to <https://unlicense.org>
+This software, including its source code, documentation, examples, comments, configuration files, tests, build scripts, commit history, and all accompanying materials (collectively, the "Software"), is protected by copyright and other applicable intellectual property laws.
+
+Ownership of the Software remains exclusively with the copyright holder.
+
+## 2. Limited Permission
+
+You are granted a personal, non-exclusive, non-transferable, revocable license to:
+
+* view and inspect the source code;
+* download a copy for personal reference;
+* study the implementation for educational or evaluation purposes.
+
+No other rights are granted.
+
+## 3. Restrictions
+
+Unless you have prior written permission from the copyright holder, you may not:
+
+* use the Software in any product or service;
+* execute the Software in production;
+* modify or create derivative works;
+* copy or redistribute the Software;
+* publish mirrors or forks containing the Software;
+* sublicense, sell, lease, rent, or otherwise commercialize the Software;
+* remove or modify copyright or license notices.
+
+Any permission not expressly granted by this license is reserved.
+
+## 4. Artificial Intelligence and Machine Learning Prohibition
+
+No part of the Software may be used, directly or indirectly, for any purpose involving artificial intelligence, machine learning, or automated knowledge extraction.
+
+This prohibition includes, but is not limited to:
+
+* training, pre-training, fine-tuning, or improving any AI or machine learning model;
+* reinforcement learning or reinforcement learning from human feedback (RLHF);
+* model distillation;
+* transfer learning;
+* supervised, unsupervised, self-supervised, or semi-supervised learning;
+* creation of datasets or benchmark datasets;
+* evaluation, testing, alignment, optimization, or calibration of AI systems;
+* generation of embeddings or vector representations;
+* indexing into vector databases or retrieval systems;
+* retrieval-augmented generation (RAG);
+* synthetic data generation;
+* automated code analysis intended to improve machine learning systems;
+* extraction of patterns, statistics, metadata, or semantic information for use in AI systems;
+* use by autonomous coding assistants or similar systems for learning or model improvement.
+
+This prohibition applies whether the Software is used:
+
+* in whole or in part;
+* modified or unmodified;
+* manually or automatically;
+* commercially, academically, personally, or by any governmental or non-profit organization.
+
+No license is granted for any AI- or machine-learning-related activity.
+
+## 5. No Implied Rights
+
+No right or license shall arise by implication, estoppel, exhaustion, or otherwise.
+
+Access to or availability of the Software does not constitute permission to use it beyond the rights expressly granted herein.
+
+## 6. Contributions
+
+Unless separately agreed in writing, any contribution, suggestion, pull request, or patch submitted to the project grants the copyright holder a perpetual, worldwide, royalty-free license to use, modify, distribute, and relicense that contribution.
+
+Submission of a contribution does not grant the contributor any additional rights in the Software.
+
+## 7. Termination
+
+Any violation of this license immediately and automatically terminates all permissions granted herein.
+
+Upon termination, you must immediately cease use of the Software and destroy all copies in your possession or control.
+
+## 8. Disclaimer of Warranty
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, OR NON-INFRINGEMENT.
+
+## 9. Limitation of Liability
+
+IN NO EVENT SHALL THE COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER IN CONTRACT, TORT, OR OTHERWISE, ARISING FROM OR IN CONNECTION WITH THE SOFTWARE OR ITS USE.
+
+## 10. Acceptance
+
+By accessing, downloading, copying, or using the Software, you acknowledge that you have read and agree to the terms of this license.
